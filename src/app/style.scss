@@ -1,0 +1,51 @@
+@import '~bulma';
+$fa-font-path: '~font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome';
+
+.container {
+  padding: 0.5rem;
+}
+
+.level {
+  padding: 2rem;
+  background-color: $dark;
+
+  label, h1 {
+    color: $light;
+  }
+
+  &-right {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.field:not(:last-child) {
+  margin: 0;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+}
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.loading {
+  flex:1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  flex: 1
+}
+
+select {
+  width: 400px;
+}

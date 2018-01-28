@@ -1,0 +1,5 @@
+export const REQUEST_DATA = 'REQUEST_DATA';
+export const RECIVE_DATA = 'RECIVE_DATA';
+export const RECIVE_ERROR = 'RECIVE_ERROR';
+export const SELECT_COIN = 'SELECT_COIN';
+export const SELECT_CURRENCY = 'SELECT_CURRENCY';
