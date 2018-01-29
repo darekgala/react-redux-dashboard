@@ -21,4 +21,3 @@ export const SelectBar = (props: any) => {
     </div>
   );
 }
-

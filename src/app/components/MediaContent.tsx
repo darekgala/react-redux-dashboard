@@ -11,4 +11,3 @@ export const MediaContent = (props: any) => {
     </div>
   )
 }
-

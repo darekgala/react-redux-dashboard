@@ -94,17 +94,3 @@ export const selectCoinAndFetchPriceData = (selectedCoin: string, selectedCurren
     dispatch(selectCurrency(selectedCurrency));
   });
 }
-
-/*
-export const selectCurrencyAndFetchHistoData = (selectedCurrency: string, selectedCoin: string) => (dispatch:any) => {
-  dispatch(fetchData(
-    {
-      url: `https://min-api.cryptocompare.com/data/histoday?fsym=${selectedCoin}&tsym=${selectedCurrency}&limit=60&aggregate=3&e=CCCAGG`,
-      dataName: 'histoData',
-      headers: {'Access-Control-Allow-Origin': '*'}
-    }
-  )).then(() => {
-    dispatch(selectCurrency(selectedCurrency));
-  });
-}
-*/

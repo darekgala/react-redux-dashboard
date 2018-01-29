@@ -27,5 +27,3 @@ export const Content = (props: any) => {
     </div>
   );
 }
-
-
