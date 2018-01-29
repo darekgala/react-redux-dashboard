@@ -3,33 +3,41 @@ import * as actionTypes from './../actions/actionTypes';
 
 export default function coinsReducer(state: any = initialState, action: any) {
   if (action.type === actionTypes.REQUEST_DATA) {
-    const stateCopy = Object.assign({}, state);
+    const stateCopy = state;
     stateCopy[action.dataName] = {
       isLoading: true,
-      error: true,
+      error: false,
       values: {}
     }
 
-    state = stateCopy;
+    state = {
+      ...stateCopy
+    };
   }
 
   if (action.type === actionTypes.RECIVE_DATA) {
-    const stateCopy = Object.assign({}, state);
+    const stateCopy = state;
     stateCopy[action.dataName] = {
       isLoading: false,
       error: false,
       values: action.payload
     }
-    
-    state = stateCopy;
+
+    state = {
+      ...stateCopy
+    };
   }
   
   if (action.type === actionTypes.RECIVE_ERROR) {
-    const stateCopy = Object.assign({}, state);
+    const stateCopy = state;
     stateCopy[action.dataName] = {
       isLoading: false,
       error: true,
       values: action.payload
+    }
+
+    state = {
+      ...stateCopy
     }
   }
   
@@ -41,7 +49,6 @@ export default function coinsReducer(state: any = initialState, action: any) {
   }
 
   if (action.type === actionTypes.SELECT_CURRENCY) {
-    debugger;
     state = {
       ...state,
       selectedCurrency: action.payload

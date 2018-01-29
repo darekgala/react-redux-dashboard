@@ -20,13 +20,19 @@ $fa-font-path: '~font-awesome/fonts';
   }
 }
 
+.media-left {
+  margin-right: 2rem;
+  width: 200px;
+  height: 200px;
+}
+
 .field:not(:last-child) {
   margin: 0;
 }
 
-.image {
-  width: 200px;
-  height: 200px;
+#container {
+  width: 600px;
+  height: 400px;
 }
 
 .wrapper {

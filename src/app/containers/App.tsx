@@ -1,47 +1,79 @@
 import * as React from 'react';
 import {connect, DispatchProp} from 'react-redux';
-import {fetchData, fetchCoinData, selectCurrency} from './../actions/coinActions';
+import {
+  fetchCoinData, 
+  selectCoinAndFetchPriceData, 
+  selectCurrencyAndFetchHistoData
+} from './../actions/actionCreators';
 
 import {SelectBar} from './../components/SelectBar';
 import {Content} from './../components/Content';
 
-interface ICoinList {
-  name: string;
-  value: string;
-}
-
 interface IProps {
-  coins: any;
-  fetchCoinData: any;
-  selectCurrency: any;
-  fetchData: any;
+  state: any;
+  dispatch: any;
+  fetchsCoinData: any;
+  selectCoinAndFetchPriceData: any;
+  selectCurrencyAndFetchHistoData: any;
 }
 
 class App extends React.Component<IProps & DispatchProp<any>> {
   props: IProps;
+  coinsState: any;
+
+  constructor(props: any) {
+    super(props);
+  }
+
+  componentWillMount() {
+    this.props.dispatch(
+      fetchCoinData()
+    ).then((response: any) => {
+        const initialCoinSymbol = Object.keys(response.payload)[0];
+        return this.props.dispatch(selectCoinAndFetchPriceData(initialCoinSymbol, 'USD'));
+      }
+    ).catch((error: any)=> {
+      console.log(error);
+    });
+  }
+
+  selectHandler(value: string, type: string) {
+    if (type === 'currency') {
+      this.props.dispatch(selectCurrencyAndFetchHistoData(this.props.state.selectedCoin, value));
+    } else {
+      this.props.dispatch(selectCoinAndFetchPriceData(value, this.props.state.selectedCurrency));
+    }
+  }
 
   render() {
-    const coinsState = this.props.coins;
-    const dataState = coinsState.data;
+    const coinsState = this.props.state;
+
+    const coinDataState = coinsState.coinData;
+    const priceDataState = coinsState.priceData;
+    const histoDataState = coinsState.histoData;
+
+    const isDataLoading = coinDataState.isLoading;
+    
+    const coinsData = coinDataState.values;
+    const priceData = priceDataState.values;
+    const histoData = histoDataState.values;
 
     const selectedCoin = coinsState.selectedCoin;
     const selectedCurrency = coinsState.selectedCurrency;
-    
-    const isDataLoading = dataState.isLoading;
-    const values = dataState.values.Data || {};
-    const selectedCoinData = values[selectedCoin];
-    const selectedCoinPriceData = coinsState.priceData.values;
-    const selectedCoinPriceValue = selectedCoinPriceData[selectedCurrency] || 0;
-    const priceData = {value: selectedCoinPriceValue, currency: selectedCurrency};
+   
+    const selectedCoinData = coinsData[selectedCoin] || {};
+    const selectedCoinPriceValue = priceData[selectedCurrency];
+    const selectedCoinPrice = selectedCoinPriceValue ?
+                                {value: selectedCoinPriceValue, currency: selectedCurrency} : {};
 
-    const coinsItems: ICoinList[] = Object
-        .keys(values)
+    const coinsItems = Object
+        .keys(coinsData)
         .map((item: string) => {
-          return {name: values[item].FullName, value:values[item].Symbol}
+          return {name: coinsData[item].FullName, value:coinsData[item].Symbol}
         });
 
-    const currencyItems: ICoinList[] = Object
-        .keys(selectedCoinPriceData)
+    const currencyItems = Object
+        .keys(priceData)
         .map((item: string) => {
           return {name: item, value: item}
         });
@@ -52,23 +84,23 @@ class App extends React.Component<IProps & DispatchProp<any>> {
           <i className="fa fa-spin fa-spinner fas fa-3x" aria-hidden="true"></i>
         </div>
       </div> : 
-      <div className='container'>
-        <Content data={selectedCoinData} priceData={priceData}/>
+      <div>
+       <div className='level'>
+        <div className='level-left'>
+          <h1 className='title'>
+            Cryptocurrency Dashboard
+          </h1>
+        </div>
+        <div className='level-right'>
+          <SelectBar items={coinsItems} selectHandler={this.selectHandler.bind(this)} label={'Choose coin:'} type='coin'/>
+          <SelectBar items={currencyItems} selectHandler={this.selectHandler.bind(this)} label={'Choose currency:'} selected={selectedCurrency} type='currency'/>
+        </div>
+        </div>
+        <Content coinData={selectedCoinData} priceData={selectedCoinPrice} histoData={histoData} selectedCoin={selectedCoin}/>
       </div>
 
     return (
       <div className='wrapper'>
-        <div className='level'>
-          <div className='level-left'>
-            <h1 className='title'>
-              Cryptocurrency Dashboard
-            </h1>
-          </div>
-          <div className='level-right'>
-            <SelectBar items={coinsItems} selectHandler={this.props.fetchCoinData} label={'Choose coin:'}/><br />
-            <SelectBar items={currencyItems} selectHandler={this.props.selectCurrency} label={'Choose currency:'} selected={selectedCurrency}/>
-          </div>
-        </div>
         {appContent}
       </div>
     );
@@ -76,22 +108,21 @@ class App extends React.Component<IProps & DispatchProp<any>> {
 }
 
 const mapStateToProps = (state: any) => {
-  return {
-    coins: state.coins
-  }
+  return {state}
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    fetchData: (config: any) => {
-      dispatch(fetchData(config));
+    fetchCoinData: () => {
+      dispatch(fetchCoinData());
     },
-    fetchCoinData: (selectedCoin: any) => {
-      dispatch(fetchCoinData(selectedCoin));
+    selectCoinAndFetchPriceData: (selectedCoin: any, selectedCurrency: any) => {
+      dispatch(selectCoinAndFetchPriceData(selectedCoin, selectedCurrency));
     },
-    selectCurrency: (selectedCurrency: any) => {
-      dispatch(selectCurrency(selectedCurrency));
-    }
+    selectCurrencyAndFetchHistoData: (selectedCoin: any, selectedCurrency: any) => {
+      dispatch(selectCurrencyAndFetchHistoData(selectedCoin, selectedCurrency));
+    },
+    dispatch
   }
 }
 

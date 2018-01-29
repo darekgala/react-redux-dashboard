@@ -1,22 +1,29 @@
 import * as React from 'react';
+import {Image} from './Image';
+import {MediaContent} from './MediaContent';
+import Chart from './Chart';
 
 export const Content = (props: any) => {
+  
   return (
     <div className='container'>
-    {props.data && <div className='media'>
-        <figure className='media-left'>
-          <img className='image' src={`https://www.cryptocompare.com${props.data.ImageUrl}`}/>
-        </figure>
+    {
+      <div className='media'>
+        <div className='media-left'>
+          {props.coinData.ImageUrl && <Image src={`https://www.cryptocompare.com${props.coinData.ImageUrl}`} />}
+        </div>
         <div className="media-content">
           <div className="content">
-            <h5><strong>Symbol</strong>: {props.data.Name}</h5>
-            <h5><strong>Full name</strong>: {props.data.CoinName}</h5>
-            <h5><strong>Algorithm</strong>: {props.data.Algorithm}</h5>
-            <h5><strong>Price</strong>: {props.priceData.value} {props.priceData.currency}</h5>
-            <h5><strong><a href={`https://www.cryptocompare.com${props.data.Url}`} target='_blank'>More info</a></strong></h5>
+            <MediaContent coinData={props.coinData} priceData={props.priceData}/>
           </div>
         </div>
-      </div>}
+        <div className='media-right'>
+          <div id='container'></div>
+          <Chart histoData={props.histoData} selectedCoin={props.selectedCoin}/>
+        </div>
+        
+      </div>
+    }
     </div>
   );
 }

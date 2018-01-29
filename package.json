@@ -5,7 +5,23 @@
   "main": "index.ts",
   "scripts": {
     "start": "webpack-dev-server --open",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "author": "Dariusz Gala",
   "license": "ISC",
@@ -13,21 +29,24 @@
     "axios": "^0.17.1",
     "bulma": "^0.6.1",
     "font-awesome": "^4.7.0",
-    "highcharts": "^6.0.4",
+    "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-axios-middleware": "^4.0.0",
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^22.1.0",
+    "@types/lodash": "^4.14.97",
     "@types/node": "^8.5.2",
     "@types/react": "^16.0.31",
     "@types/react-dom": "^16.0.3",
     "@types/react-redux": "^5.0.14",
+    "@types/redux-logger": "^3.0.5",
     "awesome-typescript-loader": "^3.4.1",
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
@@ -39,12 +58,15 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "gulp": "^3.9.1",
+    "highcharts": "^6.0.4",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
+    "redux-logger": "^3.0.6",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
+    "ts-jest": "^22.0.1",
     "tslint": "^5.8.0",
     "tslint-eslint-rules": "^4.1.1",
     "typescript": "^2.6.2",
