@@ -1,20 +1,13 @@
-import * as React from 'react';
-import * as Highcharts from 'highcharts';
+import React from 'react';
+import Highcharts from 'highcharts';
 import * as _ from 'lodash';
 
-interface IProps {
-  histoData: any;
-  selectedCoin: string;
-}
-
 export default class Chart extends React.Component {
-  props: IProps;
-
-  constructor(props: any) {
+  constructor(props) {
     super(props);
   }
 
-  drawChart(data: any) {
+  drawChart(data) {
     Highcharts.chart('container', {
       chart: {
         type: 'spline'
@@ -47,11 +40,11 @@ export default class Chart extends React.Component {
     });
   }
 
-  createHighchartsData(data: any) {
-    return data.map((dataPoint: any) => [dataPoint.time, dataPoint.close]);
+  createHighchartsData(data) {
+    return data.map((dataPoint) => [dataPoint.time, dataPoint.close]);
   }
 
-  componentDidUpdate(prevProps: any) {
+  componentDidUpdate(prevProps) {
     const isPrevDataEmpty = _.isEmpty(prevProps.histoData);
     const isCurrentDataEmpty =  _.isEmpty(this.props.histoData);
 

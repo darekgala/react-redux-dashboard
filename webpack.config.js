@@ -8,7 +8,7 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 
 const config = {
   entry: {
-    app: [`${APP_DIR}/app/index.tsx`, `${APP_DIR}/app/style.scss`]
+    app: [`${APP_DIR}/app/index.jsx`, `${APP_DIR}/app/style.scss`]
   },
   output: {
     path: DIST_DIR,
@@ -16,13 +16,17 @@ const config = {
   },
   devtool: 'cheap-module-source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [
       {
-        test: /\.tsx?$/,
-        loaders: ['awesome-typescript-loader']
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+            presets: ['es2015', 'react', 'stage-2']
+        }
       },
       {
         test: /\.html$/,

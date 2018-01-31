@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
-export const MediaContent = (props: any) => {
+export const MediaContent = (props) => {
   return (
     <div>
       <h5><strong>Symbol</strong>: {props.coinData.Name}</h5>

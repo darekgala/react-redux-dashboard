@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {connect, DispatchProp} from 'react-redux';
 import {
   fetchCoinData, 
@@ -9,35 +9,24 @@ import {
 import {SelectBar} from './../components/SelectBar';
 import {Content} from './../components/Content';
 
-interface IProps {
-  state: any;
-  dispatch: any;
-  fetchsCoinData: any;
-  selectCoinAndFetchPriceData: any;
-  selectCurrencyAndFetchHistoData: any;
-}
-
-class App extends React.Component<IProps & DispatchProp<any>> {
-  props: IProps;
-  coinsState: any;
-
-  constructor(props: any) {
+class App extends React.Component {
+  constructor(props) {
     super(props);
   }
 
   componentWillMount() {
     this.props.dispatch(
       fetchCoinData()
-    ).then((response: any) => {
+    ).then((response) => {
         const initialCoinSymbol = Object.keys(response.payload)[0];
         return this.props.dispatch(selectCoinAndFetchPriceData(initialCoinSymbol, 'USD'));
       }
-    ).catch((error: any)=> {
+    ).catch((error)=> {
       console.log(error);
     });
   }
 
-  selectHandler(value: string, type: string) {
+  selectHandler(value, type) {
     if (type === 'currency') {
       this.props.dispatch(selectCurrencyAndFetchHistoData(this.props.state.selectedCoin, value));
     } else {
@@ -68,13 +57,13 @@ class App extends React.Component<IProps & DispatchProp<any>> {
 
     const coinsItems = Object
         .keys(coinsData)
-        .map((item: string) => {
+        .map((item) => {
           return {name: coinsData[item].FullName, value:coinsData[item].Symbol}
         });
 
     const currencyItems = Object
         .keys(priceData)
-        .map((item: string) => {
+        .map((item) => {
           return {name: item, value: item}
         });
 
@@ -107,19 +96,19 @@ class App extends React.Component<IProps & DispatchProp<any>> {
   }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state) => {
   return {state}
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     fetchCoinData: () => {
       dispatch(fetchCoinData());
     },
-    selectCoinAndFetchPriceData: (selectedCoin: any, selectedCurrency: any) => {
+    selectCoinAndFetchPriceData: (selectedCoin, selectedCurrency) => {
       dispatch(selectCoinAndFetchPriceData(selectedCoin, selectedCurrency));
     },
-    selectCurrencyAndFetchHistoData: (selectedCoin: any, selectedCurrency: any) => {
+    selectCurrencyAndFetchHistoData: (selectedCoin, selectedCurrency) => {
       dispatch(selectCurrencyAndFetchHistoData(selectedCoin, selectedCurrency));
     },
     dispatch

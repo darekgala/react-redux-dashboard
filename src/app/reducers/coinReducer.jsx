@@ -1,7 +1,7 @@
 import initialState from './../initialState';
 import * as actionTypes from './../actions/actionTypes';
 
-export default function coinsReducer(state: any = initialState, action: any) {
+export default function coinsReducer(state = initialState, action) {
   if (action.type === actionTypes.REQUEST_DATA) {
     const stateCopy = state;
     stateCopy[action.dataName] = {

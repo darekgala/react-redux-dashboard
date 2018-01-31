@@ -1,9 +1,8 @@
-import {} from 'jest';
 import * as types from '../src/app/actions/actionTypes';
 import * as actions from '../src/app/actions/actionCreators';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import * as moxios from 'moxios';
+import moxios from 'moxios';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);

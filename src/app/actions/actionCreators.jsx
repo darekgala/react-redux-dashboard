@@ -1,14 +1,14 @@
 import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
-const requestData = (dataName: string) => {
+const requestData = (dataName) => {
   return {
     type: actionTypes.REQUEST_DATA,
     dataName
   }
 }
 
-const reciveData = (data: any, dataName: string) => {
+const reciveData = (data, dataName) => {
   return {
     type: actionTypes.RECIVE_DATA,
     payload: data.Data || data,
@@ -16,7 +16,7 @@ const reciveData = (data: any, dataName: string) => {
   }
 }
 
-const reciveError = (error: any, dataName: string) => {
+const reciveError = (error, dataName) => {
   return {
     type: actionTypes.RECIVE_ERROR,
     payload: error,
@@ -24,21 +24,21 @@ const reciveError = (error: any, dataName: string) => {
   }
 }
 
-export const selectCoin = (selectedCoin: string) => {
+export const selectCoin = (selectedCoin) => {
   return {
     type: actionTypes.SELECT_COIN,
     payload: selectedCoin
   }
 }
 
-export const selectCurrency = (selectedCurrency: string) => {
+export const selectCurrency = (selectedCurrency) => {
   return {
     type: actionTypes.SELECT_CURRENCY,
     payload: selectedCurrency
   }
 }
 
-const fetchData = (config: any) => (dispatch: any) => {
+const fetchData = (config) => (dispatch) => {
   dispatch(requestData(config.dataName));
   return axios({
     url: config.url,
@@ -51,7 +51,7 @@ const fetchData = (config: any) => (dispatch: any) => {
   });
 }
 
-export const fetchCoinData = () => (dispatch: any) => {
+export const fetchCoinData = () => (dispatch) => {
   return dispatch(
     fetchData({
       url: 'https://min-api.cryptocompare.com/data/all/coinlist',
@@ -61,7 +61,7 @@ export const fetchCoinData = () => (dispatch: any) => {
   )
 }
 
-const fetchPriceData = (selectedCoin: string) => (dispatch: any) => {
+const fetchPriceData = (selectedCoin) => (dispatch) => {
   return dispatch(fetchData({
     url: `https://min-api.cryptocompare.com/data/price?fsym=${selectedCoin}&tsyms=USD,EUR,PLN`,
     dataName: 'priceData',
@@ -69,7 +69,7 @@ const fetchPriceData = (selectedCoin: string) => (dispatch: any) => {
   }));
 }
 
-const fetchHistoData = (selectedCoin: string, selectedCurrency: string) => (dispatch:any) => {
+const fetchHistoData = (selectedCoin, selectedCurrency) => (dispatch) => {
   return dispatch(fetchData({
     url: `https://min-api.cryptocompare.com/data/histoday?fsym=${selectedCoin}&tsym=${selectedCurrency}&limit=60&aggregate=3&e=CCCAGG`,
     dataName: 'histoData',
@@ -77,14 +77,14 @@ const fetchHistoData = (selectedCoin: string, selectedCurrency: string) => (disp
   }));
 }
 
-export const selectCurrencyAndFetchHistoData = (selectedCoin: string, selectedCurrency: string) => (dispatch:any) => {
+export const selectCurrencyAndFetchHistoData = (selectedCoin, selectedCurrency) => (dispatch) => {
   return dispatch(fetchHistoData(selectedCoin, selectedCurrency))
   .then(() => {
     dispatch(selectCurrency(selectedCurrency));
   });
 }
 
-export const selectCoinAndFetchPriceData = (selectedCoin: string, selectedCurrency: string) => (dispatch:any) => {
+export const selectCoinAndFetchPriceData = (selectedCoin, selectedCurrency) => (dispatch) => {
   return dispatch(fetchPriceData(selectedCoin))
   .then(() => {
     return dispatch(fetchHistoData(selectedCoin, selectedCurrency))

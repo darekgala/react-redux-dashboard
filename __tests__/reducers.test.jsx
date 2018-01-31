@@ -1,4 +1,3 @@
-import {} from 'jest';
 import * as types from '../src/app/actions/actionTypes';
 import initialState from '../src/app/initialState';
 import reducer from '../src/app/reducers/index';

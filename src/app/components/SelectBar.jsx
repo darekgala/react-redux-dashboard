@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
-export const SelectBar = (props: any) => {
+export const SelectBar = (props) => {
 
   return (
     <div className='field'>
@@ -10,7 +10,7 @@ export const SelectBar = (props: any) => {
           <select 
             onChange={(event) => props.selectHandler(event.target.value, props.type)}
             value={props.selected}>
-            {props.items.map((item: any) => <option value={item.value} key={item.value}>{item.name}</option>)}
+            {props.items.map((item) => <option value={item.value} key={item.value}>{item.name}</option>)}
           </select>
         </div>
       

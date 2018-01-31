@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import {Image} from './Image';
 import {MediaContent} from './MediaContent';
 import Chart from './Chart';
 
-export const Content = (props: any) => {
+export const Content = (props) => {
   
   return (
     <div className='container'>
