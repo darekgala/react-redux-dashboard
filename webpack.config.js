@@ -16,13 +16,21 @@ const config = {
   },
   devtool: 'cheap-module-source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     loaders: [
       {
         test: /\.tsx?$/,
         loaders: ['awesome-typescript-loader']
+      },
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+            presets: ['es2015', 'react', 'stage-2']
+        }
       },
       {
         test: /\.html$/,
