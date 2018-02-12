@@ -7,7 +7,7 @@ export default function coinsReducer(state = initialState, action) {
     stateCopy[action.dataName] = {
       isLoading: true,
       error: false,
-      values: {}
+      values: []
     }
 
     state = {

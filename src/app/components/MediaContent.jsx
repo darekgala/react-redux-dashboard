@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export const MediaContent = (props) => {
   return (
@@ -10,4 +11,30 @@ export const MediaContent = (props) => {
       <h5><strong><a href={`https://www.cryptocompare.com${props.coinData.Url}`} target='_blank'>More info</a></strong></h5>
     </div>
   )
+}
+
+MediaContent.propTypes = {
+  coinData: PropTypes.shape({
+    Name: PropTypes.string,
+    CoinName: PropTypes.string,
+    Algorithm: PropTypes.string,
+    Url: PropTypes.string
+  }),
+  priceData: PropTypes.shape({
+    value: PropTypes.number,
+    currency: PropTypes.string
+  })
+}
+
+MediaContent.defaultProps = {
+  coindData: {
+    Name: '',
+    CoinName: '',
+    Algorithm: '',
+    Url: ''
+  },
+  priceData: {
+    value: 0,
+    currency: ''
+  }
 }

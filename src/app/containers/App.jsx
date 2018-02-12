@@ -1,10 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect, DispatchProp} from 'react-redux';
-import {
-  fetchCoinData, 
-  selectCoinAndFetchPriceData, 
-  selectCurrencyAndFetchHistoData
-} from './../actions/actionCreators';
+import {bindActionCreators} from 'redux';
+import * as coinActionCreators from './../actions/actionCreators';
 
 import {SelectBar} from './../components/SelectBar';
 import {Content} from './../components/Content';
@@ -15,27 +13,19 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(
-      fetchCoinData()
-    ).then((response) => {
-        const initialCoinSymbol = Object.keys(response.payload)[0];
-        return this.props.dispatch(selectCoinAndFetchPriceData(initialCoinSymbol, 'USD'));
-      }
-    ).catch((error)=> {
-      console.log(error);
-    });
+    this.props.initData();
   }
 
   selectHandler(value, type) {
     if (type === 'currency') {
-      this.props.dispatch(selectCurrencyAndFetchHistoData(this.props.state.selectedCoin, value));
+      this.props.selectCurrencyAndFetchHistoData(this.props.state.coins.selectedCoin, value);
     } else {
-      this.props.dispatch(selectCoinAndFetchPriceData(value, this.props.state.selectedCurrency));
+      this.props.selectCoinAndFetchPriceData(value, this.props.state.coins.selectedCurrency);
     }
   }
 
   render() {
-    const coinsState = this.props.state;
+    const coinsState = this.props.state.coins;
 
     const coinDataState = coinsState.coinData;
     const priceDataState = coinsState.priceData;
@@ -96,23 +86,19 @@ class App extends React.Component {
   }
 }
 
+App.propTypes = {
+  state: PropTypes.object.isRequired,
+  fetchCoinData: PropTypes.func.isRequired,
+  selectCoinAndFetchPriceData: PropTypes.func.isRequired,
+  selectCurrencyAndFetchHistoData: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => {
   return {state}
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchCoinData: () => {
-      dispatch(fetchCoinData());
-    },
-    selectCoinAndFetchPriceData: (selectedCoin, selectedCurrency) => {
-      dispatch(selectCoinAndFetchPriceData(selectedCoin, selectedCurrency));
-    },
-    selectCurrencyAndFetchHistoData: (selectedCoin, selectedCurrency) => {
-      dispatch(selectCurrencyAndFetchHistoData(selectedCoin, selectedCurrency));
-    },
-    dispatch
-  }
+  return bindActionCreators(coinActionCreators, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

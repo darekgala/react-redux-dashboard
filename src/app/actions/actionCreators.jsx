@@ -94,3 +94,15 @@ export const selectCoinAndFetchPriceData = (selectedCoin, selectedCurrency) => (
     dispatch(selectCurrency(selectedCurrency));
   });
 }
+
+export const initData = () => (dispatch) => {
+  return dispatch(
+    fetchCoinData()
+  ).then((response) => {
+      const initialCoinSymbol = Object.keys(response.payload)[0];
+      return dispatch(selectCoinAndFetchPriceData(initialCoinSymbol, 'USD'));
+    }
+  ).catch((error)=> {
+    console.log(error);
+  });
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Highcharts from 'highcharts';
 import * as _ from 'lodash';
 
@@ -64,4 +65,13 @@ export default class Chart extends React.Component {
       </div>
     )
   }
+}
+
+Chart.propTypes = {
+  selectedCoin: PropTypes.string,
+  histoData: PropTypes.array.isRequired
+}
+
+Chart.defaultProps = {
+  selectedCoin: ''
 }

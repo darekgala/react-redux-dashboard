@@ -1,7 +1,7 @@
 const dataInitialState = {
   isLoading: true,
   error: false,
-  values: {}
+  values: []
 }
 
 export default {
