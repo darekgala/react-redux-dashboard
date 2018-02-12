@@ -1,3 +1,4 @@
+import {combineReducers} from 'redux';
 import coins from './coinReducer';
 
-export default coins;
+export default combineReducers({coins});
