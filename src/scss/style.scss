@@ -20,25 +20,8 @@ $fa-font-path: '~font-awesome/fonts';
   }
 }
 
-.media-left {
-  margin-right: 2rem;
-  width: 200px;
-  height: 200px;
-}
-
 .field:not(:last-child) {
   margin: 0;
-}
-
-#container {
-  width: 600px;
-  height: 400px;
-}
-
-.wrapper {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 .loading {
@@ -49,9 +32,15 @@ $fa-font-path: '~font-awesome/fonts';
 }
 
 .content {
-  flex: 1
+  flex: 1;
 }
 
-select {
-  width: 400px;
+.currency-selector {
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover,
+  &--selected {
+    text-decoration: underline;
+  }
 }

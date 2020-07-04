@@ -8,10 +8,11 @@ const DIST_DIR = path.resolve(__dirname, 'dist');
 
 const config = {
   entry: {
-    app: [`${APP_DIR}/app/index.tsx`, `${APP_DIR}/app/style.scss`]
+    app: [`${APP_DIR}/js/index.tsx`, `${APP_DIR}/scss/style.scss`]
   },
   output: {
     path: DIST_DIR,
+    publicPath: './',
     filename: '[name].js'
   },
   devtool: 'cheap-module-source-map',
@@ -29,7 +30,7 @@ const config = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-            presets: ['es2015', 'react', 'stage-2']
+          presets: ['es2015', 'react', 'stage-2']
         }
       },
       {
@@ -59,8 +60,8 @@ const config = {
           }
         }]
       },
-      { 
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/, 
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
         use: [{
           loader: 'file-loader',
           options: {
@@ -78,7 +79,10 @@ const config = {
       hash: true
     }),
     new ExtractTextWebpackPlugin('[name].css')
-  ]
-}
+  ],
+  devServer: {
+    historyApiFallback: true
+  }
+};
 
 module.exports = config;
