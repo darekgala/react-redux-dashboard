@@ -1,48 +1,43 @@
-import * as React from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { fetchCurrencies } from '../features/currencies/currenciesActions';
+import { fetchCurrencies, FetchCurrenciesType } from '../features/currencies/currenciesActions';
 import Status from '../consts/actions';
+import CurrenciesList from '../components/currenciesList/CurrenciesList';
 import { StoreType } from '../features/storeType';
 import { getCurrenciesStatus } from '../features/currencies/currenciesSelectors';
-import CurrenciesList from '../components/CurrenciesList';
 import { CurrencyType } from '../features/currency/currencyTypes';
 import { getCurrencies } from '../features/currency/currencySelectors';
 
-interface History {
+interface HistoryType {
   push: void & ((path: string) => void);
 }
 
-interface Props {
-  fetchCurrencies: void;
-  currencies: CurrencyType[] | null;
-  status: Status | null;
-  currencyId?: string;
-  history: History;
-}
-
-interface OwnProps {
-  history: History;
-  match: {params: {currencyId?: string}}
-}
-
-interface State {
+interface StateType {
   currencies: CurrencyType[] | null;
   status: Status | null;
   currencyId?: string;
 }
 
-const mapState = (state: StoreType, ownProps: OwnProps): State => ({
+interface PropsType extends StateType {
+  fetchCurrencies: FetchCurrenciesType;
+  history: HistoryType;
+}
+
+interface OwnPropsType {
+  history: HistoryType;
+  match: { params: { currencyId?: string } }
+}
+
+const mapStateToProps = (state: StoreType, ownProps: OwnPropsType): StateType => ({
   status: getCurrenciesStatus(state),
   currencies: getCurrencies(state),
   currencyId: ownProps.match.params.currencyId
 });
-
-const mapDispatch = {
+const mapDispatchToProps = {
   fetchCurrencies
 };
-const connector = connect(mapState, mapDispatch);
-
-type ReduxProps = ConnectedProps<typeof connector>;
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type ReduxPropsType = ConnectedProps<typeof connector>;
 
 export const CurrenciesContainer = ({
   fetchCurrencies,
@@ -50,8 +45,8 @@ export const CurrenciesContainer = ({
   currencies,
   currencyId,
   history
-}: ReduxProps & Props): React.ReactElement | null => {
-  React.useEffect(() => {
+}: ReduxPropsType & PropsType): ReactElement | null => {
+  useEffect(() => {
     fetchCurrencies();
   }, []);
 
@@ -71,7 +66,7 @@ export const CurrenciesContainer = ({
     );
   }
 
-  if (status === Status.SUCCESS && currencies) {
+  if (currencies) {
     return (
       <div className="wrapper">
         <CurrenciesList

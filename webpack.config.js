@@ -12,7 +12,7 @@ const config = {
   },
   output: {
     path: DIST_DIR,
-    publicPath: './',
+    publicPath: '/',
     filename: '[name].js'
   },
   devtool: 'cheap-module-source-map',

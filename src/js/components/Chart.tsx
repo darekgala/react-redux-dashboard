@@ -1,15 +1,15 @@
-import * as React from 'react';
-import * as Highcharts from 'highcharts';
+import React, { ReactElement, useEffect } from 'react';
+import Highcharts from 'highcharts';
 import { HistoryType } from '../features/currency/currencyTypes';
 
-interface Props {
+interface PropsType {
   history: HistoryType[];
   currencyId: string;
   chartId: string;
 }
 
-export const Chart = ({ currencyId, history, chartId }: Props): React.ReactElement => {
-  React.useEffect(() => {
+export const Chart = ({ currencyId, history, chartId }: PropsType): ReactElement => {
+  useEffect(() => {
     const data = history.map((dataPoint) => [dataPoint.time, dataPoint.close]);
 
     Highcharts.chart(chartId, {

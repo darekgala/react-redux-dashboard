@@ -21,12 +21,12 @@ export interface HistoryType {
 }
 
 export interface HistoryObjectType {
-  currency: string,
+  symbol: string,
   data: HistoryType[]
 }
 
 export interface CurrencyExtendedType {
-  price?: PriceType;
+  conversion?: PriceType;
   history?: HistoryObjectType;
 }
 

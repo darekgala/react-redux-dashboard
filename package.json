@@ -3,37 +3,24 @@
   "version": "1.0.0",
   "description": "React/Redux interactive app",
   "main": "index.ts",
+  "author": "Dariusz Gala",
+  "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --open",
     "build": "webpack -p",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  },
-  "author": "Dariusz Gala",
-  "license": "ISC",
   "dependencies": {
-    "@types/history": "^3",
-    "@types/react-router": "^5.1.8",
     "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
     "bulma": "^0.9.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "font-awesome": "^4.7.0",
     "highcharts": "^6.0.4",
     "history": "^5.0.0",
+    "jest": "^26.1.0",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -46,9 +33,18 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.4",
+    "@babel/plugin-transform-object-assign": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
     "@types/enzyme": "^3.1.8",
     "@types/enzyme-adapter-react-16": "^1.0.1",
     "@types/highcharts": "^5.0.16",
+    "@types/history": "^4.7.6",
     "@types/jest": "^22.1.0",
     "@types/lodash": "^4.14.97",
     "@types/moxios": "^0.4.8",
@@ -63,16 +59,12 @@
     "@typescript-eslint/eslint-plugin": "^3.4.0",
     "@typescript-eslint/parser": "^3.4.0",
     "awesome-typescript-loader": "^3.4.1",
-    "babel-core": "^6.26.0",
-    "babel-jest": "^22.1.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "babel-jest": "^26.1.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^7.3.1",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-import-resolver-typescript": "^2.0.0",
@@ -85,7 +77,6 @@
     "gulp": "^3.9.1",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
-    "jest": "^22.1.4",
     "moxios": "^0.4.0",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
@@ -98,5 +89,24 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7"
+  },
+  "jest": {
+    "testURL": "https://www.testUrl.pl",
+    "transform": {
+      "^.+\\.jsx?$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "setupFiles": [
+      "./testsSetup.js"
+    ],
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }

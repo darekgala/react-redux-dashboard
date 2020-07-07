@@ -8,8 +8,8 @@ export interface StoreType {
   currency: CurrenciesDictionary
 }
 
-export type AppThunk<ReturnType = void> =
+export type AppThunkType<ReturnType = void> =
   ThunkAction<ReturnType, StoreType, unknown, Action<string>>;
 
-export type AppDispatch<ReturnType = void> =
+export type AppDispatchType<ReturnType = void> =
   ThunkDispatch<StoreType, unknown, Action<string>>

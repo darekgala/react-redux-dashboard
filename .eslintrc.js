@@ -1,4 +1,7 @@
 module.exports = {
+  env: {
+    jest: true
+  },
   extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
@@ -30,6 +33,8 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 0,
     'no-param-reassign': 0,
     'react/button-has-type': 0,
-    'react/jsx-fragments': 0
+    'react/jsx-fragments': 0,
+    'react/jsx-props-no-spreading': 0,
+    'import/prefer-default-export': 0
   },
 };

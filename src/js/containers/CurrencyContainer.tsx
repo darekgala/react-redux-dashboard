@@ -1,34 +1,37 @@
-import * as React from 'react';
+import React, { useState, useEffect, ReactElement, Fragment } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import Status from '../consts/actions';
 import { StoreType } from '../features/storeType';
 import { getCurrencyStatusById, getCurrencyById } from '../features/currency/currencySelectors';
-import { fetchCurrencyPrice, fetchCurrencyPriceHistory } from '../features/currency/currencyActions';
+import {
+  fetchCurrencyPrice,
+  fetchCurrencyPriceHistory,
+  FetchCurrencyPriceType,
+  FetchCurrencyPriceHistoryType
+} from '../features/currency/currencyActions';
 import { CurrencyType } from '../features/currency/currencyTypes';
-import CurrencyPreview from '../components/CurrencyPreview';
+import CurrencyPreview from '../components/currencyPreview/CurrencyPreview';
 
 interface Push {
   (path: string): void;
 }
 
-interface State {
+interface StateType {
   status: Status | null;
   currency: CurrencyType | null;
 }
 
-interface Props extends State {
-  fetchCurrencyPrice: void;
-  fetchCurrencyPriceHistory: void;
-  currencyId: string;
-  push: Push
-}
-
-interface OwnProps {
+interface OwnPropsType {
   currencyId: string;
   push: Push;
 }
 
-const mapState = (state: StoreType, ownProps: OwnProps): State => {
+interface PropsType extends OwnPropsType, StateType {
+  fetchCurrencyPrice: FetchCurrencyPriceType;
+  fetchCurrencyPriceHistory: FetchCurrencyPriceHistoryType;
+}
+
+const mapState = (state: StoreType, ownProps: OwnPropsType): StateType => {
   const { currencyId } = ownProps;
 
   return {
@@ -41,30 +44,29 @@ const mapDispatch = {
   fetchCurrencyPriceHistory
 };
 const connector = connect(mapState, mapDispatch);
+type ReduxPropsType = ConnectedProps<typeof connector>;
 
-type ReduxProps = ConnectedProps<typeof connector>;
-
-export const CurrenciesContainer = ({
+export const CurrencyContainer = ({
   fetchCurrencyPrice,
   fetchCurrencyPriceHistory,
   status,
   currency,
   currencyId,
   push
-}: ReduxProps & Props): React.ReactElement | null => {
-  const [rendered, setRendered] = React.useState(false);
+}: ReduxPropsType & PropsType): ReactElement | null => {
+  const [rendered, setRendered] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchCurrencyPrice(currencyId);
     setRendered(true);
   }, []);
 
-  function handleModalClose(): void {
+  function handleModalClose() {
     return push('/');
   }
 
-  const previewContent = (chartId: string): React.ReactElement => (
-    <React.Fragment>
+  const previewContent = (chartId: string): ReactElement => (
+    <Fragment>
       {
         (!status || status === Status.IN_PROGRESS) && (
           <div className="loading">
@@ -90,7 +92,7 @@ export const CurrenciesContainer = ({
           />
         )
       }
-    </React.Fragment>
+    </Fragment>
   );
 
   if (!rendered) {
@@ -98,7 +100,7 @@ export const CurrenciesContainer = ({
   }
 
   return (
-    <React.Fragment>
+    <Fragment>
       <div className="column is-hidden-touch">
         <div className="box">
           {previewContent('desktop')}
@@ -120,8 +122,8 @@ export const CurrenciesContainer = ({
           </footer>
         </div>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
-export default connector(CurrenciesContainer);
+export default connector(CurrencyContainer);
