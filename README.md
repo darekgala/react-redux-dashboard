@@ -1,25 +1,37 @@
-# React/Redux interactive app
+# React + Redux dashboard
 This is an simple app which fetches and displays data about cryptocurrencies. User can select any coin and one of three currencies (USD, EUR, PLN) to modify visible values. Data are fetched from [CryptoCompare](https://www.cryptocompare.com/api#) public API.
 
 ### Setup: 
-Instalation of required packages can be perform using npm package manager with a module bundler like Webpack or Browserify
+Instalation of required packages can be perform using npm package manager with a module bundler like Webpack or Yarn
 ```
 npm install
 ```
+```
+yarn install
+```
 
-To launch app locally you need to type (there is no need to open browser, it will be open automatically):
+To launch app locally you need to type (there is no need to open browser, it will be opened automatically):
 ```
 npm start
 ```
+```
+yarn start
+```
 
-Launching tests can be done by command:
+Launching tests can be done by command (adding `--coverage` flag will print coverage table):
 ```
 npm run test
 ```
+```
+yarn test
+```
 
-Additionally if preparing to the deployment is needed you can minify app by typing:
+Bundle creation is triggered by:
 ```
 npm run build
+```
+```
+yarn build
 ```
 
 ### Project description:
@@ -31,19 +43,3 @@ To create interactive application based on React/Redux basics I focused on crypt
 * **JavaScript libraries**: Basic library which is used in this app is React - it allows to create user interfaces based on components where dataflow can be performed based on components state. Very helpfull in managing components state is Redux library. To connect React with Redux 'react-redux' package is used - Provider is used to provide Redux store, and connect function which maps Redux state and dispatch functions to the app props. To use React with Redux effectively I chooseed to organize files in specific structure: React components are devided in to Components and Containers - Containers are 'smart' which means that they are connected to the Redux state and they can change this state by dispatching actions. In the other hand Components are 'dumb' - they have not any information about state and they recieve all data as props. In this project only App is an container - it fetches data and pass it down as props to the components. Redux reducers are in reducers folder and actions in actions folder. Thanks to that code is easy to maintain, update and change. To fetch data asynchronously I chooseed Axios - I like it because it is Promise based client. Using axios in dispatch actions causes that specific middleware need to be used in Redux store to handle asynchronous actions. I decidded to use thunk middleware because it is more intuitive to me than promiseMiddleware from 'redux-promise' (I am additionally using logger middleware to log any changes in the state to the console).
 * **Testing**: To write unit tests I choosed Jest which is the most recomended for testing React. To be able testing Redux with React I used 'redux-mock-store' package to configure mock store and 'moxios' to mock axios requests. Components are tested using Enzyme which wraps rendered components and makes easy to manipulate and traverse it. NOTE: actionCreators test is in .jsx file bacause I had Type Error after importing configureStore function and I can't find any solution to this problem.
 * **Additional**: A line chart is created using Highcharts library, the advantage of which is that the entire graph is not redrawn after the data change, but only the series. In addition I use Lodash which I very like - it provides a lot of very useful functions.
-
-### Pros and cons:
-* **Pros**: 
-  * Using Redux makes working with state very simple - maybye in small project like this it could not be seen but in larger projects Redux shines
-  * Asynchronously loaded data does not freezes app when running and user can be notified if data is fetching by adding spinner icons
-  * User can select cryptocurrency and currency without changing each other
-  * Every data is fetched by one generic action
-
-* **Cons**:
-  * Cryptocurrency select field should have search option because now only the option of scrolling through the list or typing the first letter exists
-  * Small number of interactive elements
-  * No option to compare cryptocurrencies between each other, no interaction with chart
-  * Loaded earlier price and historical data are not stored and in each time data need to be fetched again
-
-### Future improvements:
-In the future app can be improved by adding more functionality and interactive elements. To do that more 'smart' components and reducers should be added. There is consideration about refactoring actions witch fetchs price and historical data. But main improvement to me is creating functionality that stores previously loaded data  - in each time that user selects previous cryptocurrency or currency, data should be loaded from store and shouldn't be fetched from API - that could improve performance
