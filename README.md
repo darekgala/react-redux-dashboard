@@ -1,6 +1,8 @@
 # React + Redux dashboard
 This is an simple app which fetches and displays data about cryptocurrencies. User can select any coin and one of three currencies (USD, EUR, PLN) to modify visible values. Data are fetched from [CryptoCompare](https://www.cryptocompare.com/api#) public API.
 
+[Live Demo](https://dariuszgala.github.io/react-redux-dashboard/)
+
 ### Setup: 
 Instalation of required packages can be perform using npm package manager with a module bundler like Webpack or Yarn
 ```
